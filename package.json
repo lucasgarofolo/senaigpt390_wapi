@@ -1,0 +1,25 @@
+{
+  "name": "senaigpt390_wapi",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/lucasgarofolo/senaigpt390_wapi#readme",
+  "bugs": {
+    "url": "https://github.com/lucasgarofolo/senaigpt390_wapi/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasgarofolo/senaigpt390_wapi.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.32.0"
+  }
+}
