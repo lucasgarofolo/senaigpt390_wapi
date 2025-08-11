@@ -7,7 +7,22 @@ const path = require('path');
 const client = new Client({
     authStrategy: new LocalAuth({
         dataPath: 'sessionBot'
-    })
+    }),
+    puppeteer: {
+        headless: true,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--no-first-run',
+            '--no-zygote',
+            '--disable-gpu',
+            '--disable-background-timer-throttling',
+            '--disable-backgrounding-occluded-windows',
+            '--disable-renderer-backgrounding'
+        ]
+    }
 });
 
 // Dashboard Web - estado de conexão e QRCode
@@ -16,6 +31,8 @@ app.use(express.urlencoded({ extended: true }));
 
 let lastQrDataUrl = null; // Data URL do QRCode atual
 let connectionStatus = 'disconnected'; // 'disconnected' | 'qr' | 'authenticated' | 'ready'
+let reconnectAttempts = 0;
+const MAX_RECONNECT_ATTEMPTS = 5;
 
 // Gerenciamento de estado do usuário
 const userStates = new Map();
@@ -183,17 +200,21 @@ async function processMessage(message) {
 client.on('ready', () => {
     connectionStatus = 'ready';
     lastQrDataUrl = null;
+    reconnectAttempts = 0; // Reset contador de tentativas
     console.log('GPT390 está online e pronto para ajudar! 🚀');
 });
 
 client.on('authenticated', () => {
     connectionStatus = 'authenticated';
+    reconnectAttempts = 0; // Reset contador de tentativas
+    console.log('✅ WhatsApp autenticado com sucesso');
 });
 
 client.on('qr', async qr => {
     connectionStatus = 'qr';
     try {
         lastQrDataUrl = await QRCode.toDataURL(qr);
+        console.log('📱 QR Code gerado, aguardando leitura...');
     } catch (e) {
         console.error('Falha ao gerar DataURL do QR:', e);
         lastQrDataUrl = null;
@@ -201,20 +222,94 @@ client.on('qr', async qr => {
 });
 
 client.on('disconnected', async (reason) => {
-    console.log('WhatsApp desconectado:', reason);
+    console.log('❌ WhatsApp desconectado:', reason);
     connectionStatus = 'disconnected';
     lastQrDataUrl = null;
+    
+    // Tentar reconectar automaticamente
+    if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+        reconnectAttempts++;
+        const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000); // Backoff exponencial, max 30s
+        
+        console.log(`🔄 Tentativa de reconexão ${reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS} em ${delay/1000}s...`);
+        
+        setTimeout(async () => {
+            try {
+                await client.initialize();
+            } catch (error) {
+                console.error('❌ Falha na reconexão:', error);
+            }
+        }, delay);
+    } else {
+        console.error('❌ Máximo de tentativas de reconexão atingido. Reinicie o bot manualmente.');
+    }
 });
 
 client.on('message', async message => {
     // Ignorar mensagens do próprio bot
     if (message.fromMe) return;
     
+    console.log('📨 Nova mensagem recebida:', {
+        from: message.from,
+        body: message.body,
+        timestamp: new Date().toISOString(),
+        connectionStatus: connectionStatus
+    });
+    
+    // Verificar se o cliente está pronto
+    if (connectionStatus !== 'ready' && connectionStatus !== 'authenticated') {
+        console.log('⚠️ Cliente não está pronto para processar mensagens. Status:', connectionStatus);
+        return;
+    }
+    
     // Processar mensagem
-    await processMessage(message);
+    try {
+        await processMessage(message);
+        console.log('✅ Mensagem processada com sucesso');
+    } catch (error) {
+        console.error('❌ Erro ao processar mensagem:', error);
+        
+        // Verificar se é erro de contexto destruído
+        if (error.message && error.message.includes('Execution context was destroyed')) {
+            console.error('🔄 Contexto de execução destruído - tentando reconectar...');
+            connectionStatus = 'disconnected';
+            
+            // Tentar reconectar
+            try {
+                await client.initialize();
+            } catch (reconnectError) {
+                console.error('❌ Falha na reconexão após erro de contexto:', reconnectError);
+            }
+            return;
+        }
+        
+        // Para outros erros, tentar enviar mensagem de erro
+        try {
+            await message.reply("❌ Ocorreu um erro ao processar sua mensagem. Tente novamente.");
+        } catch (replyError) {
+            console.error('❌ Erro ao enviar mensagem de erro:', replyError);
+        }
+    }
 });
 
-client.initialize();
+// Função para inicializar o cliente com tratamento de erro
+async function initializeClient() {
+    try {
+        await client.initialize();
+    } catch (error) {
+        console.error('❌ Erro na inicialização do cliente:', error);
+        
+        if (error.message && error.message.includes('Execution context was destroyed')) {
+            console.log('🔄 Tentando reinicializar em 5 segundos...');
+            setTimeout(() => {
+                initializeClient();
+            }, 5000);
+        }
+    }
+}
+
+// Inicializar cliente
+initializeClient();
 
 // Rotas do dashboard
 app.get('/health', (req, res) => {
@@ -305,7 +400,7 @@ app.post('/logout', async (req, res) => {
         try { await client.logout(); } catch (_) {}
 
         // Limpar pasta de sessão usada pelo LocalAuth
-        const sessionDir = path.resolve(process.cwd(), 'session');
+        const sessionDir = path.resolve(process.cwd(), 'sessionBot');
         try {
             await fs.promises.rm(sessionDir, { recursive: true, force: true });
         } catch (e) {
@@ -315,10 +410,11 @@ app.post('/logout', async (req, res) => {
         // Resetar estado do dashboard
         connectionStatus = 'disconnected';
         lastQrDataUrl = null;
+        reconnectAttempts = 0; // Reset contador de tentativas
 
         // Re-inicializar cliente para gerar novo QR
         setTimeout(() => {
-            client.initialize();
+            initializeClient();
         }, 500);
 
         return res.redirect('/');
