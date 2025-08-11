@@ -6,7 +6,7 @@ const path = require('path');
 
 const client = new Client({
     authStrategy: new LocalAuth({
-        dataPath: 'session'
+        dataPath: 'sessionBot'
     })
 });
 
@@ -85,11 +85,6 @@ function getUserState(userId) {
     return userStates.get(userId);
 }
 
-// Utilitário de delay
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 // Função para lidar com o menu principal
 async function handleMainMenu(message, userState) {
     const option = message.body.trim();
@@ -97,13 +92,11 @@ async function handleMainMenu(message, userState) {
     switch (option) {
         case '1': // Informações Gerais
             await message.reply(mensagens.informacoesGerais);
-            await sleep(3000);
             await message.reply(mensagens.menu);
             break;
             
         case '2': // Localização
             await message.reply(mensagens.localizacao);
-            await sleep(3000);
             await message.reply(mensagens.menu);
             break;
             
@@ -114,7 +107,7 @@ async function handleMainMenu(message, userState) {
             
         case '4': // Documentos
             await message.reply(mensagens.documentos);
-            await sleep(3000);
+            
             await message.reply(mensagens.menu);
             break;
             
@@ -126,13 +119,11 @@ FN:SENAI Cruzeiro - Atendimento Humanizado
 TEL:+551231411405
 END:VCARD`;
             await message.reply(vcard);
-            await sleep(3000);
             await message.reply(mensagens.menu);
             break;
             
         case '6': // Certificados
             await message.reply(mensagens.certificados);
-            await sleep(3000);
             await message.reply(mensagens.menu);
             break;
             
@@ -161,13 +152,11 @@ async function handleSubmenuCourses(message, userState) {
         await message.reply(`🔗 *${nomeCurso}*\n\nVeja todas as informações sobre o curso através desse link:\n${urlCurso}`);
         
         // Reenviar menu de cursos
-        await sleep(3000);
         await message.reply(mensagens.cursos);
     } else {
         // Opção inválida - limpar estado e voltar ao menu principal
         userState.submenu = undefined;
         await message.reply("❌ Opção inválida. Retornando ao menu principal.");
-        await sleep(3000);
         await message.reply(mensagens.menu);
     }
 }
@@ -258,6 +247,10 @@ app.get('/', (req, res) => {
   button.danger { background: #dc2626; }
   a { color: #93c5fd; }
   .footer { opacity: .6; margin-top: 16px; font-size: 12px; }
+  /* Estado de preparo do QR */
+  .qr-wait { display: flex; flex-direction: column; align-items: center; gap: 12px; margin: 24px 0; }
+  .spinner { width: 36px; height: 36px; border: 3px solid rgba(255,255,255,.2); border-top-color: #60a5fa; border-radius: 50%; animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
@@ -268,7 +261,13 @@ app.get('/', (req, res) => {
         <strong>Status:</strong> <span class="${isConnected ? 'ok' : 'warn'}">${isConnected ? 'Conectado' : (connectionStatus === 'qr' ? 'Aguardando leitura do QRCode' : 'Desconectado')}</span>
       </div>
       ${isConnected && user ? `<div><strong>Usuário:</strong> ${user}</div>` : ''}
-      ${!isConnected && lastQrDataUrl ? `<div class="qr"><img src="${lastQrDataUrl}" alt="QRCode de conexão" /></div>` : ''}
+      ${!isConnected ? (lastQrDataUrl ? `<div class="qr"><img src="${lastQrDataUrl}" alt="QRCode de conexão" /></div>` : `
+        <div class="qr-wait">
+          <div class="spinner"></div>
+          <div>Preparando QR Code, por favor aguarde... <strong><span id="timer">0s</span></strong></div>
+          <div class="footer">Assim que o QR estiver pronto, ele aparecerá aqui automaticamente.</div>
+        </div>
+      `) : ''}
       ${isConnected ? `
       <div class="actions"> 
         <form action="/logout" method="post" onsubmit="return confirm('Desconectar e limpar sessão?')"> 
@@ -278,6 +277,21 @@ app.get('/', (req, res) => {
       <div class="footer">Atualize a página para ver o status atual.</div>
     </div>
   </div>
+  <script>
+    (function(){
+      var waiting = ${!isConnected && !lastQrDataUrl ? 'true' : 'false'};
+      if (waiting) {
+        var seconds = 0;
+        var el = document.getElementById('timer');
+        setInterval(function(){
+          seconds += 1;
+          if (el) { el.textContent = seconds + 's'; }
+        }, 1000);
+        // Atualiza a página periodicamente para exibir o QR assim que for gerado
+        setInterval(function(){ location.reload(); }, 4000);
+      }
+    })();
+  </script>
 </body>
 </html>`;
 
@@ -316,5 +330,5 @@ app.post('/logout', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Dashboard disponível em http://0.0.0.0:${PORT}`);
+    console.log(`Dashboard disponível em http://localhost:${PORT}`);
 });
