@@ -1,5 +1,4 @@
 const { Client, LocalAuth } = require('whatsapp-web.js');
-const qrcodeTerminal = require('qrcode-terminal');
 const express = require('express');
 const QRCode = require('qrcode');
 const fs = require('fs');
@@ -98,13 +97,13 @@ async function handleMainMenu(message, userState) {
     switch (option) {
         case '1': // Informações Gerais
             await message.reply(mensagens.informacoesGerais);
-            await sleep(5000);
+            await sleep(3000);
             await message.reply(mensagens.menu);
             break;
             
         case '2': // Localização
             await message.reply(mensagens.localizacao);
-            await sleep(5000);
+            await sleep(3000);
             await message.reply(mensagens.menu);
             break;
             
@@ -115,7 +114,7 @@ async function handleMainMenu(message, userState) {
             
         case '4': // Documentos
             await message.reply(mensagens.documentos);
-            await sleep(5000);
+            await sleep(3000);
             await message.reply(mensagens.menu);
             break;
             
@@ -127,13 +126,13 @@ FN:SENAI Cruzeiro - Atendimento Humanizado
 TEL:+551231411405
 END:VCARD`;
             await message.reply(vcard);
-            await sleep(5000);
+            await sleep(3000);
             await message.reply(mensagens.menu);
             break;
             
         case '6': // Certificados
             await message.reply(mensagens.certificados);
-            await sleep(5000);
+            await sleep(3000);
             await message.reply(mensagens.menu);
             break;
             
@@ -162,13 +161,13 @@ async function handleSubmenuCourses(message, userState) {
         await message.reply(`🔗 *${nomeCurso}*\n\nVeja todas as informações sobre o curso através desse link:\n${urlCurso}`);
         
         // Reenviar menu de cursos
-        await sleep(5000);
+        await sleep(3000);
         await message.reply(mensagens.cursos);
     } else {
         // Opção inválida - limpar estado e voltar ao menu principal
         userState.submenu = undefined;
         await message.reply("❌ Opção inválida. Retornando ao menu principal.");
-        await sleep(5000);
+        await sleep(3000);
         await message.reply(mensagens.menu);
     }
 }
@@ -210,8 +209,6 @@ client.on('qr', async qr => {
         console.error('Falha ao gerar DataURL do QR:', e);
         lastQrDataUrl = null;
     }
-    // Exibição opcional no terminal (pode ser comentado se preferir somente a Web)
-    qrcodeTerminal.generate(qr, { small: true });
 });
 
 client.on('disconnected', async (reason) => {
