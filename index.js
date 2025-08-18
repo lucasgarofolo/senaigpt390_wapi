@@ -150,7 +150,7 @@ async function handleMainMenu(message, userState) {
             break;
 
         case '7': // Atendimento Humanizado
-            await message.reply(atendimentoHumanizado);
+            await message.reply(mensagens.atendimentoHumanizado);
             await message.reply(mensagens.menu);
             break;
             
