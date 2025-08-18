@@ -51,7 +51,7 @@ const mensagens = {
     
     documentos: "📋 *Documentos Necessários para Matrícula Presencial*\n\n✅ *Documentos pessoais:*\n• RG e CPF (cópias)\n• Comprovante de residência\n• 2 fotos 3x4\n\n✅ *Documentos escolares:*\n• Histórico escolar\n• Certificado de conclusão\n\n✅ *Documentos adicionais:*\n• Comprovante de renda familiar\n• Termo de responsabilidade (menores de idade)\n\n📞 *Para mais informações, entre em contato conosco!*",
     
-    atendimentoHumanizado: "👥 *Atendimento Humanizado*\n\nNossa equipe está pronta para te ajudar com todas as suas dúvidas sobre matrículas, cursos e informações gerais.\n\n📞 *WhatsApp (atendimento realizado por um atendente - o tempo de resposta pode variar):*\n https://wa.me/551231411506 \n\n⏰ *Horário de atendimento:*\nSegunda a Sexta: 8h às 17h\nSábado: 9h às 11h",
+    atendimentoHumanizado: "👥 *Atendimento Humanizado*\n\nNossa equipe está pronta para te ajudar com todas as suas dúvidas sobre matrículas, cursos e informações gerais.\n\n📞 *WhatsApp (atendimento realizado por um atendente - o tempo de resposta pode variar):*\n https://wa.me/551231411405 \n\n⏰ *Horário de atendimento:*\nSegunda a Sexta: 8h às 17h\nSábado: 9h às 11h",
     
     certificados: "🎓 *Certificados*\n\nApós a conclusão do curso com aproveitamento mínimo de 70% e presença mínima de 75%, você receberá um certificado reconhecido pelo SENAI e válido em todo o território nacional.\n\n📋 *Para solicitar segunda via:*\n Compareça pessoalmente à nossa escola ou envie sua solicitação para o e-mail: *secretaria390@sp.senai.br* \n\n Inclua as seguintes informações: \n *- Nome completo* \n *- CPF* \n *- Nome do Curso*.",
 
