@@ -47,7 +47,7 @@ const mensagens = {
     
     informacoesGerais: "🌟 *Informações Gerais da Escola* 🌟 \n\n 📅 *Horário de Funcionamento:* \n Segunda a Sexta: 08h00 às 20h00 \n Sábados: 09h00 às 11h00 \n **Exceto Domingos e Feriados** \n\n 📍 *Endereço:* \n Rua São Tomás, 01 - Jardim São José - Cruzeiro/SP \n\n 📞 *Telefone:* \n (12) 3141-1400 \n\n 🟢 *WhatsApp (atendimento realizado por um atendente - o tempo de resposta pode variar):* \n (12) 3141-1405 \n\n 🌐 *Redes Sociais e Site:* \n 🔗 Instagram: @senaicruzeiro \n 🔗 Facebook: fb.com/escolasenaicruzeiro \n 🔗 Site Oficial: https://sp.senai.br/unidade/cruzeiro/ \n\n Estamos à disposição para mais informações! 😊",
     
-    localizacao: "📍 *SENAI - Cruzeiro*\n\n🗺️ *Endereço:*\nRua São Tomás, 01 - Jardim São José \nCruzeiro - SP, 12703-290\n\n Google Maps: https://encurtador.com.br/4uUay \n \n 📞 *Telefone:* (12) 3141-1400",
+    localizacao: "📍 *SENAI - Cruzeiro*\n\n🗺️ *Endereço:*\nRua São Tomás, 01 - Jardim São José \nCruzeiro - SP, 12703-290\n\n Google Maps: https://maps.app.goo.gl/dWA2ufXcZdUQHFZz9 \n \n 📞 *Telefone:* (12) 3141-1400",
     
     documentos: "📋 *Documentos Necessários para Matrícula Presencial*\n\n✅ *Documentos pessoais:*\n• RG e CPF (cópias)\n• Comprovante de Escolaridade\n\n Informações a serem fornecidas: e-mail, telefone e endereço completo com CEP. \n\n📞 *Para mais informações, entre em contato conosco!*",
     
