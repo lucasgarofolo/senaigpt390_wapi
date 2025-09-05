@@ -302,6 +302,19 @@ client.on('message', async message => {
     }
 });
 
+// Logs detalhados do estado de carregamento e autenticação
+client.on('loading_screen', (percent, message) => {
+	console.log('⏳ Carregando WhatsApp Web:', percent, message);
+});
+
+client.on('change_state', (state) => {
+	console.log('🔁 Estado do cliente:', state);
+});
+
+client.on('auth_failure', (message) => {
+	console.error('❌ Falha de autenticação:', message);
+});
+
 // Função para inicializar o cliente com tratamento de erro
 async function initializeClient() {
     try {
