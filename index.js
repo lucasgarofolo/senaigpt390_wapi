@@ -3,7 +3,6 @@ const express = require('express');
 const QRCode = require('qrcode');
 const fs = require('fs');
 const path = require('path');
-const multer = require('multer');
 
 const client = new Client({
     authStrategy: new LocalAuth({
@@ -332,93 +331,6 @@ async function initializeClient() {
     }
 }
 
-// Configuração do multer para upload de arquivos
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const uploadDir = path.join(__dirname, 'uploads');
-        // Criar diretório se não existir
-        if (!fs.existsSync(uploadDir)) {
-            fs.mkdirSync(uploadDir, { recursive: true });
-        }
-        cb(null, uploadDir);
-    },
-    filename: function (req, file, cb) {
-        // Manter o nome original do arquivo
-        cb(null, file.originalname);
-    }
-});
-
-const upload = multer({
-    storage: storage,
-    fileFilter: function (req, file, cb) {
-        // Aceitar apenas arquivos CSV
-        if (file.mimetype === 'text/csv' || path.extname(file.originalname).toLowerCase() === '.csv') {
-            cb(null, true);
-        } else {
-            cb(new Error('Apenas arquivos CSV são permitidos!'), false);
-        }
-    },
-    limits: {
-        fileSize: 5 * 1024 * 1024 // Limite de 5MB
-    }
-});
-
-// Função para processar e salvar o arquivo CSV
-async function processCSVFile(filePath) {
-    try {
-        console.log(`📁 Processando arquivo CSV: ${filePath}`);
-        
-        // Ler o conteúdo do arquivo
-        const csvContent = fs.readFileSync(filePath, 'utf-8');
-        const lines = csvContent.split('\n').filter(line => line.trim() !== '');
-        
-        console.log(`📊 Total de linhas processadas: ${lines.length}`);
-        
-        // Log das primeiras linhas para debug
-        console.log('\n--- Primeiras linhas do CSV ---');
-        for (let i = 0; i < Math.min(3, lines.length); i++) {
-            console.log(`Linha ${i + 1}: ${lines[i].trim()}`);
-        }
-        
-        // Aqui você pode adicionar lógica para:
-        // - Parsear o CSV e extrair dados dos cursos
-        // - Atualizar as variáveis urlsCursos e nomesCursos
-        // - Validar os dados recebidos
-        
-        // Salvar backup do arquivo anterior (se existir)
-        const backupPath = path.join(__dirname, 'cursos_backup.csv');
-        const currentPath = path.join(__dirname, 'cursos.csv');
-        
-        if (fs.existsSync(currentPath)) {
-            fs.copyFileSync(currentPath, backupPath);
-            console.log('💾 Backup do arquivo anterior criado');
-        }
-        
-        // Salvar o novo arquivo
-        fs.copyFileSync(filePath, currentPath);
-        console.log('✅ Arquivo CSV atualizado com sucesso!');
-        
-        // Remover arquivo temporário
-        fs.unlinkSync(filePath);
-        console.log('🗑️ Arquivo temporário removido');
-        
-        return {
-            success: true,
-            message: 'CSV processado e salvo com sucesso',
-            linesCount: lines.length,
-            backupCreated: fs.existsSync(backupPath)
-        };
-        
-    } catch (error) {
-        console.error('❌ Erro ao processar arquivo CSV:', error);
-        return {
-            success: false,
-            message: 'Erro ao processar arquivo CSV',
-            error: error.message
-        };
-    }
-}
-
 // Inicializar cliente
 initializeClient();
 
@@ -505,72 +417,8 @@ app.get('/', (req, res) => {
     return res.status(200).send(html);
 });
 
-app.post('/flow/atualizar-cursos', upload.single('cursos'), async (req, res) => {
-    try {
-        console.log('🔄 Recebida requisição para atualizar cursos via Power Automate');
-        
-        // Verificar se arquivo foi enviado
-        if (!req.file) {
-            console.log('❌ Nenhum arquivo CSV foi enviado');
-            return res.status(400).json({
-                success: false,
-                message: 'Nenhum arquivo CSV foi enviado. Use o campo "cursos" para enviar o arquivo.'
-            });
-        }
-        
-        console.log(`📁 Arquivo recebido: ${req.file.originalname}`);
-        console.log(`📦 Tamanho: ${req.file.size} bytes`);
-        console.log(`📂 Caminho temporário: ${req.file.path}`);
-        
-        // Processar o arquivo CSV
-        const result = await processCSVFile(req.file.path);
-        
-        if (result.success) {
-            console.log('✅ Processamento do CSV concluído com sucesso');
-            return res.status(200).json({
-                success: true,
-                message: 'Arquivo CSV atualizado com sucesso!',
-                data: {
-                    fileName: req.file.originalname,
-                    fileSize: req.file.size,
-                    linesProcessed: result.linesCount,
-                    backupCreated: result.backupCreated,
-                    timestamp: new Date().toISOString()
-                }
-            });
-        } else {
-            console.log('❌ Falha no processamento do CSV');
-            return res.status(500).json({
-                success: false,
-                message: 'Erro ao processar arquivo CSV',
-                error: result.error
-            });
-        }
-        
-    } catch (error) {
-        console.error('❌ Erro no endpoint /flow/atualizar-cursos:', error);
-        
-        // Se for erro do multer (arquivo inválido)
-        if (error instanceof multer.MulterError) {
-            if (error.code === 'LIMIT_FILE_SIZE') {
-                return res.status(400).json({
-                    success: false,
-                    message: 'Arquivo muito grande. Tamanho máximo permitido: 5MB'
-                });
-            }
-            return res.status(400).json({
-                success: false,
-                message: 'Erro no upload do arquivo: ' + error.message
-            });
-        }
-        
-        // Outros erros
-        return res.status(500).json({
-            success: false,
-            message: 'Erro interno do servidor',
-            error: error.message
-        });
-    }
+app.post('/flow/atualizar-cursos', async (req, res) => {
+
 });
 
 app.post('/logout', async (req, res) => {
