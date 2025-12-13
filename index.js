@@ -57,25 +57,25 @@ const mensagens = {
 
 // URLs dos cursos
 const urlsCursos = {
-    '1': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=Ajustador%20&pag=1',
-    '2': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=Comandos&pag=1',
-    '3': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=Controladores&pag=1',
-    '4': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=Eletricista&pag=1',
-    '5': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=Excel&pag=1',
-    '6': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=Ferramenteiro%20de%20corte&pag=1',
-    '7': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=INFORM%C3%81TICA&pag=1',
-    '8': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=iNSPETOR%20DE%20QUALIDADE&pag=1',
-    '9': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=Mec%C3%A2nico&pag=1',
-    '10': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=PONTE&pag=1',
-    '11': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=EMPILHADEIRA&pag=1',
-    '12': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=CENTRO%20DE%20USINAGEM&pag=1',
-    '13': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=OPERADOR%20DE%20M%C3%81QUINAS%20DE%20USINAGEM%20CONVENCIONAIS&pag=1',
-    '14': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=PRENSA&pag=1',
-    '15': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=TORNO%20CNC&pag=1',
-    '16': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=Programa%C3%A7%C3%A3o&pag=1',
-    '17': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=Realidade&pag=1',
-    '18': 'https://sp.senai.br/cursos/0/0?unidade=390&pesquisa=Soldador&pag=1',
-    '19': 'https://sp.senai.br/cursos/0/0?unidade=390&modalidade=3'
+    '1': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=Ajustador&pag=1',
+    '2': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=Comandos&pag=1',
+    '3': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=Controladores&pag=1',
+    '4': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=Eletricista&pag=1',
+    '5': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=Excel&pag=1',
+    '6': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=Ferramenteiro&pag=1',
+    '7': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=inform%C3%A1tica&pag=1',
+    '8': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=inspetor&pag=1',
+    '9': 'https://www.sp.senai.br/cursos/cursos-livres/0?regiao=3&cidadeint=cruzeiro&pesquisa=mec%C3%A2nico',
+    '10': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=ponte&pag=1',
+    '11': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=empilhadeira&pag=1',
+    '12': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=usinagem&pag=1',
+    '13': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=OPERADOR%20DE%20M%C3%81QUINAS%20DE%20USINAGEM%20CONVENCIONAIS&pag=1',
+    '14': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=prensa&pag=1',
+    '15': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=TORNO%20CNC&pag=1',
+    '16': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=Programa%C3%A7%C3%A3o&pag=1',
+    '17': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=realidade&pag=1',
+    '18': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=soldador&pag=1',
+    '19': 'https://www.sp.senai.br/cursos/0/0?modalidade=3&cidadeint=cruzeiro'
 };
 
 // Nomes dos cursos
@@ -105,7 +105,8 @@ const nomesCursos = {
 function getUserState(userId) {
     if (!userStates.has(userId)) {
         userStates.set(userId, {
-            submenu: undefined
+            submenu: undefined,
+            awaitingCourseDecision: false
         });
     }
     return userStates.get(userId);
@@ -160,6 +161,27 @@ async function handleMainMenu(message, userState) {
 async function handleSubmenuCourses(message, userState) {
     const option = message.body.trim();
     
+    // Verificar se estamos aguardando decisão após enviar um curso
+    if (userState.awaitingCourseDecision) {
+        if (option === '1') {
+            userState.awaitingCourseDecision = false;
+            await message.reply("📚 Aqui está a lista de cursos novamente:");
+            await message.reply(mensagens.cursos);
+            return;
+        }
+        
+        if (option === '0') {
+            userState.awaitingCourseDecision = false;
+            userState.submenu = undefined;
+            await message.reply("✅ Voltando ao menu principal.");
+            await message.reply(mensagens.menu);
+            return;
+        }
+        
+        await message.reply("❓ Por favor, responda com 1 para ver a lista novamente ou 0 para voltar ao menu principal.");
+        return;
+    }
+    
     if (option === '0') { // Voltar ao menu principal
         userState.submenu = undefined;
         await message.reply(mensagens.menu);
@@ -174,8 +196,9 @@ async function handleSubmenuCourses(message, userState) {
         // Enviar LinkPreview
         await message.reply(`🔗 *${nomeCurso}*\n\nVeja todas as informações sobre o curso através desse link:\n${urlCurso}`);
         
-        // Reenviar menu de cursos
-        await message.reply(mensagens.cursos);
+        // Perguntar próxima ação
+        userState.awaitingCourseDecision = true;
+        await message.reply("Deseja ver a lista de cursos novamente ou voltar ao menu principal?\nDigite 1 para ver a lista outra vez ou 0 para retornar ao menu.");
     } else {
         // Opção inválida - limpar estado e voltar ao menu principal
         userState.submenu = undefined;
