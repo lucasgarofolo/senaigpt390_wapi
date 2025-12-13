@@ -40,8 +40,10 @@ const mensagens = {
     
     menu: "*Como posso te ajudar?* 🙋‍♂️\n \n*Escolha uma opção de 1 a 6* \n-----------------------------------\n1️⃣ - *Informações Gerais* \n2️⃣ - *Localização* \n3️⃣ - *Documentos de Matrículas*  \n4️⃣ - *Cursos Oferecidos* \n5️⃣ - *Boletos* \n6️⃣ - *Certificados* \n7️⃣ - *Atendimento com uma pessoa*",
     
-    cursos: "📢 *Cursos com Matrículas Abertas!* \n \n0️⃣ **Voltar ao Menu Principal** 🔙\n 1️⃣  *Ajustador Mecânico* 🔧\n   2️⃣  *Comandos Elétricos* ⚡\n    3️⃣  *CLP - Controladores Lógicos Programáveis* 💻\n    4️⃣  *Eletricista Instalador* 💡\n    5️⃣  *Excel* 📊\n    6️⃣  *Ferramenteiro de Corte e Dobra* 🔩\n    7️⃣  *Informática Básica* 🖥️\n    8️⃣  *Inspetor de Qualidade* 🔎\n    9️⃣  *Mecânico de Manutenção* ⚙️\n    1️⃣0️⃣ *NR11 - Operador de Ponte Rolante* 🏗️\n    1️⃣1️⃣ *NR11 - Operador de Empilhadeira* 🚜\n    1️⃣2️⃣ *Operador de Centro de Usinagem CNC* ⚙️\n    1️⃣3️⃣ *Operador de Máquina de Usinagem Convencional* 🏭\n    1️⃣4️⃣ *Operador de Prensa Industrial* 🏗️\n    1️⃣5️⃣ *Operador de Torno CNC* 🔄\n     1️⃣6️⃣ *Programação de Robôs Articulados* 🤖\n    1️⃣7️⃣ *Realidade Virtual* 🕶️\n    1️⃣8️⃣ *Soldador ao Arco Elétrico e Oxigás* 🔥\n    1️⃣9️⃣ *Cursos Gratuitos*     🎁 \n\n ✅ *Vagas limitadas!*  \n 📅 *Matrículas abertas por tempo limitado!*",    
+    cursos: "📢 *Cursos com Matrículas Abertas!* \n \n0️⃣ **Voltar ao Menu Principal** 🔙\n1️⃣  *Ajustador Mecânico* 🔧\n2️⃣  *Comandos Elétricos* ⚡\n3️⃣  *CLP - Controladores Lógicos Programáveis* 💻\n4️⃣  *Eletricista Instalador* 💡\n5️⃣  *Excel* 📊\n6️⃣  *Ferramenteiro de Corte e Dobra* 🔩\n7️⃣  *Informática Básica* 🖥️\n8️⃣  *Inspetor de Qualidade* 🔎\n9️⃣  *Mecânico de Manutenção* ⚙️\n1️⃣0️⃣ *NR11 - Operador de Ponte Rolante* 🏗️\n1️⃣1️⃣ *NR11 - Operador de Empilhadeira* 🚜\n1️⃣2️⃣ *Operador de Centro de Usinagem CNC* ⚙️\n1️⃣3️⃣ *Operador de Máquina de Usinagem Convencional* 🏭\n1️⃣4️⃣ *Operador de Prensa Industrial* 🏗️\n1️⃣5️⃣ *Operador de Torno CNC* 🔄\n1️⃣6️⃣ *Programação de Robôs Articulados* 🤖\n1️⃣7️⃣ *Realidade Virtual* 🕶️\n1️⃣8️⃣ *Soldador ao Arco Elétrico e Oxigás* 🔥\n1️⃣9️⃣ *Cursos Gratuitos*     🎁 \n\n ✅ *Vagas limitadas!*  \n 📅 *Matrículas abertas por tempo limitado!*",    
     
+    retorno:"Deseja ver a lista de cursos novamente ou voltar ao menu principal? \n \n1️⃣ - *Ver a lista de cursos* \n0️⃣ - *Retornar ao menu principal*",
+
     informacoesGerais: "🌟 *Informações Gerais da Escola* 🌟 \n\n 📅 *Horário de Funcionamento:* \n Segunda a Sexta: 08h00 às 20h00 \n Sábados: 09h00 às 11h00 \n **Exceto Domingos e Feriados** \n\n 📍 *Endereço:* \n Rua São Tomás, 01 - Jardim São José - Cruzeiro/SP \n\n 📞 *Telefone:* \n (12) 3141-1400 \n\n 🟢 *WhatsApp (atendimento realizado por um atendente - o tempo de resposta pode variar):* \n (12) 3141-1405 \n\n 🌐 *Redes Sociais e Site:* \n 🔗 Instagram: @senaicruzeiro \n 🔗 Facebook: fb.com/escolasenaicruzeiro \n 🔗 Site Oficial: https://sp.senai.br/unidade/cruzeiro/ \n\n Estamos à disposição para mais informações! 😊",
     
     localizacao: "📍 *SENAI - Cruzeiro*\n\n🗺️ *Endereço:*\nRua São Tomás, 01 - Jardim São José \nCruzeiro - SP, 12703-290\n\n Google Maps: https://maps.app.goo.gl/dWA2ufXcZdUQHFZz9 \n \n 📞 *Telefone:* (12) 3141-1400",
@@ -105,7 +107,8 @@ const nomesCursos = {
 function getUserState(userId) {
     if (!userStates.has(userId)) {
         userStates.set(userId, {
-            submenu: undefined
+            submenu: undefined,
+            courseStep:undefined,
         });
     }
     return userStates.get(userId);
@@ -122,12 +125,10 @@ async function handleMainMenu(message, userState) {
             
         case '2': // Localização
             await message.reply(mensagens.localizacao);
-            await message.reply(mensagens.menu);
             break;
             
         case '3': // Documentos
             await message.reply(mensagens.documentos);
-            await message.reply(mensagens.menu);
             break;
             
         case '4': // Cursos Oferecidos
@@ -137,17 +138,14 @@ async function handleMainMenu(message, userState) {
         
         case '5': // Boletos
             await message.reply(mensagens.boletos);
-            await message.reply(mensagens.menu);
             break;    
             
         case '6': // Certificados
             await message.reply(mensagens.certificados);
-            await message.reply(mensagens.menu);
             break;
 
         case '7': // Atendimento Humanizado
             await message.reply(mensagens.atendimentoHumanizado);
-            await message.reply(mensagens.menu);
             break;
             
         default: // Qualquer outra mensagem
@@ -159,28 +157,56 @@ async function handleMainMenu(message, userState) {
 // Função para lidar com o submenu de cursos
 async function handleSubmenuCourses(message, userState) {
     const option = message.body.trim();
-    
-    if (option === '0') { // Voltar ao menu principal
-        userState.submenu = undefined;
-        await message.reply(mensagens.menu);
+
+    // Se o usuário ainda está escolhendo um curso
+    if (userState.courseStep !== 'afterCourse') {
+
+        if (option === '0') {
+            userState.submenu = undefined;
+            userState.courseStep = undefined;
+            await message.reply(mensagens.menu);
+            return;
+        }
+
+        // Opção válida de curso
+        if (urlsCursos[option]) {
+            const nomeCurso = nomesCursos[option];
+            const urlCurso = urlsCursos[option];
+
+            await message.reply(
+                `🔗 *${nomeCurso}*\n\nVeja todas as informações sobre o curso através desse link:\n${urlCurso}`
+            );
+
+            await message.reply(mensagens.retorno);
+
+            // Agora muda o estado
+            userState.courseStep = 'afterCourse';
+            return;
+        }
+
+        // Opção inválida
+        await message.reply("❌ Opção inválida. Escolha um curso de 1 a 14 ou 0 para voltar.");
+        await message.reply(mensagens.cursos);
         return;
     }
-    
-    // Verificar se é uma opção válida de curso (1-14)
-    if (urlsCursos[option]) {
-        const nomeCurso = nomesCursos[option];
-        const urlCurso = urlsCursos[option];
-        
-        // Enviar LinkPreview
-        await message.reply(`🔗 *${nomeCurso}*\n\nVeja todas as informações sobre o curso através desse link:\n${urlCurso}`);
-        
-        // Reenviar menu de cursos
-        await message.reply(mensagens.cursos);
-    } else {
-        // Opção inválida - limpar estado e voltar ao menu principal
-        userState.submenu = undefined;
-        await message.reply("❌ Opção inválida. Retornando ao menu principal.");
-        await message.reply(mensagens.menu);
+
+    // Após ver um curso
+    if (userState.courseStep === 'afterCourse') {
+
+        if (option === '0') {
+            userState.submenu = undefined;
+            userState.courseStep = undefined;
+            await message.reply(mensagens.menu);
+            return;
+        }
+
+        if (option === '1') {
+            userState.courseStep = undefined;
+            await message.reply(mensagens.cursos);
+            return;
+        }
+
+        await message.reply("❌ Opção inválida. Digite 0 para voltar ao menu principal ou 1 para ver os cursos novamente.");
     }
 }
 
