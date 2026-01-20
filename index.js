@@ -19,7 +19,12 @@ const client = new Client({
             '--no-first-run',
             '--no-zygote'
         ]
-    }
+    },
+    // SOLUÇÃO TEMPORÁRIA DEVIDO AO markedUnread que estava dando problema! 20/01/2026
+    webVersionCache: {
+            type: 'remote',
+            remotePath: `https://raw.githubusercontent.com/wppconnect-team/wa-version/refs/heads/main/html/2.3000.1031490220-alpha.html`,    
+        },
 });
 
 // Dashboard Web - estado de conexão e QRCode
