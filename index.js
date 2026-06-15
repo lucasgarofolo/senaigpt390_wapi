@@ -41,25 +41,25 @@ const userStates = new Map();
 
 // Mensagens globais
 const mensagens = {
-    boasvindas: "👋 Olá, como vai? \n\nEu sou GPT390, o *assistente virtual* do SENAI - Cruzeiro. \n",
+    boasvindas: "👋 Olá, como vai? \n\nEu sou GPT390, o *assistente virtual* do SENAI - Cruzeiro. \n\n Matrículas abertas! \n Confira os cursos disponíveis e matricule-se: \n\n https://abre.ai/matriculas390 ",
     
-    menu: "*Como posso te ajudar?* 🙋‍♂️\n \n*Escolha uma opção de 1 a 6* \n-----------------------------------\n1️⃣ - *Informações Gerais* \n2️⃣ - *Localização* \n3️⃣ - *Documentos de Matrículas*  \n4️⃣ - *Cursos Oferecidos* \n5️⃣ - *Boletos* \n6️⃣ - *Certificados* \n7️⃣ - *Atendimento com uma pessoa*",
+    menu: "*Como posso te ajudar?* 🙋‍♂️\n \n*Escolha uma opção de 1 a 6* \n-----------------------------------\n1️⃣ - *Informações Gerais* \n2️⃣ - *Localização* \n3️⃣ - *Documentos de Matrículas*  \n4️⃣ - *Cursos Oferecidos* \n5️⃣ - *Financeiro* \n6️⃣ - *Certificados* \n7️⃣ - *Atendimento com uma pessoa*",
     
-    cursos: "📢 *Cursos com Matrículas Abertas!* \n \n0️⃣ **Voltar ao Menu Principal** 🔙\n1️⃣  *Ajustador Mecânico* 🔧\n2️⃣  *Comandos Elétricos* ⚡\n3️⃣  *CLP - Controladores Lógicos Programáveis* 💻\n4️⃣  *Eletricista Instalador* 💡\n5️⃣  *Excel* 📊\n6️⃣  *Ferramenteiro de Corte e Dobra* 🔩\n7️⃣  *Informática Básica* 🖥️\n8️⃣  *Inspetor de Qualidade* 🔎\n9️⃣  *Mecânico de Manutenção* ⚙️\n1️⃣0️⃣ *NR11 - Operador de Ponte Rolante* 🏗️\n1️⃣1️⃣ *NR11 - Operador de Empilhadeira* 🚜\n1️⃣2️⃣ *Operador de Centro de Usinagem CNC* ⚙️\n1️⃣3️⃣ *Operador de Máquina de Usinagem Convencional* 🏭\n1️⃣4️⃣ *Operador de Prensa Industrial* 🏗️\n1️⃣5️⃣ *Operador de Torno CNC* 🔄\n1️⃣6️⃣ *Programação de Robôs Articulados* 🤖\n1️⃣7️⃣ *Realidade Virtual* 🕶️\n1️⃣8️⃣ *Soldador ao Arco Elétrico e Oxigás* 🔥\n1️⃣9️⃣ *Cursos Gratuitos*     🎁 \n\n ✅ *Vagas limitadas!*  \n 📅 *Matrículas abertas por tempo limitado!*",    
+    cursos: "📢 *Cursos com Matrículas Abertas!* \n \n0️⃣ **Voltar ao Menu Principal** 🔙\n1️⃣  *Ajustador Mecânico* 🔧\n2️⃣  *Comandos Elétricos* ⚡\n3️⃣  *CLP - Controladores Lógicos Programáveis* 💻\n4️⃣  *Eletricista Instalador* 💡\n5️⃣  *Excel* 📊\n6️⃣  *Ferramenteiro de Corte e Dobra* 🔩\n7️⃣  *Informática Básica* 🖥️\n8️⃣  *Inspetor de Qualidade* 🔎\n9️⃣  *Mecânico de Manutenção* ⚙️\n1️⃣0️⃣ *NR11 - Operador de Ponte Rolante* 🏗️\n1️⃣1️⃣ *NR11 - Operador de Empilhadeira* 🚜\n1️⃣2️⃣ *Operador de Centro de Usinagem CNC* ⚙️\n1️⃣3️⃣ *Operador de Prensa Industrial* 🏗️\n1️⃣4️⃣ *Operador de Torno CNC* 🔄\n1️⃣5️⃣ *Soldador ao Arco Elétrico e Oxigás* 🔥\n1️⃣6️⃣ *Instalador de Ar Condicionado Tipo Split* ❄️\n 1️⃣7️⃣ *Cursos Gratuitos*     🎁 \n\n ✅ *Vagas limitadas!*  \n 📅 *Matrículas abertas por tempo limitado!*",    
     
     retorno:"Deseja ver a lista de cursos novamente ou voltar ao menu principal? \n \n1️⃣ - *Ver a lista de cursos* \n0️⃣ - *Retornar ao menu principal*",
 
-    informacoesGerais: "🌟 *Informações Gerais da Escola* 🌟 \n\n 📅 *Horário de Funcionamento:* \n Segunda a Sexta: 08h00 às 20h00 \n Sábados: 09h00 às 11h00 \n **Exceto Domingos e Feriados** \n\n 📍 *Endereço:* \n Rua São Tomás, 01 - Jardim São José - Cruzeiro/SP \n\n 📞 *Telefone:* \n (12) 3141-1400 \n\n 🟢 *WhatsApp (atendimento realizado por um atendente - o tempo de resposta pode variar):* \n (12) 3141-1405 \n\n 🌐 *Redes Sociais e Site:* \n 🔗 Instagram: @senaicruzeiro \n 🔗 Facebook: fb.com/escolasenaicruzeiro \n 🔗 Site Oficial: https://sp.senai.br/unidade/cruzeiro/ \n\n Estamos à disposição para mais informações! 😊",
+    informacoesGerais: "🌟 *Informações Gerais da Escola* 🌟 \n\n 📅 *Horário de Funcionamento:* \n Segunda a Sexta: 08h00 às 20h00 \n Sábados: 09h00 às 12h00 \n **Exceto Domingos e Feriados** \n\n 📍 *Endereço:* \n Rua São Tomás, 01 - Jardim São José - Cruzeiro/SP \n\n 📞🟢 *Telefone e WhatsApp:* \n (12) 3141-1400 \n\n 🌐 *Redes Sociais e Site:* \n 🟢 Entre no canal oficial do SENAI Cruzeiro: https://whatsapp.com/channel/0029Vb6JseHI1rcZb8fRaM3z \n 🔗 Instagram: @senaicruzeiro \n 🔗 Facebook: fb.com/escolasenaicruzeiro \n 🔗 Site Oficial: https://sp.senai.br/unidade/cruzeiro/ \n\n Estamos à disposição para mais informações! 😊",
     
     localizacao: "📍 *SENAI - Cruzeiro*\n\n🗺️ *Endereço:*\nRua São Tomás, 01 - Jardim São José \nCruzeiro - SP, 12703-290\n\n Google Maps: https://maps.app.goo.gl/dWA2ufXcZdUQHFZz9 \n \n 📞 *Telefone:* (12) 3141-1400",
     
-    documentos: "📋 *Documentos Necessários para Matrícula Presencial*\n\n✅ *Documentos pessoais:*\n• RG e CPF (cópias)\n• Comprovante de Escolaridade\n\n Informações a serem fornecidas: e-mail, telefone e endereço completo com CEP. \n\n📞 *Para mais informações, entre em contato conosco!*",
+    documentos: "📋 *Documentos Necessários para Matrícula Presencial*\n\n✅ *Documentos pessoais:*\n• RG e CPF (cópias)\n• Comprovante de Escolaridade\n• Pré-requisitos de acordo com o curso escolhido. \n\n Informações a serem fornecidas: e-mail, telefone e endereço completo com CEP. \n\n 👥 Aluno menor de idade, comparecer com responsável legal, munido de RG e CPF \n\n 📞 *Para mais informações, entre em contato conosco!*",
     
     atendimentoHumanizado: "👥 *Atendimento Humanizado*\n\nNossa equipe está pronta para te ajudar com todas as suas dúvidas sobre matrículas, cursos e informações gerais.\n\n📞 *WhatsApp (atendimento realizado por um atendente - o tempo de resposta pode variar):*\n https://wa.me/551231411405 \n\n⏰ *Horário de atendimento:*\nSegunda a Sexta: 8h às 17h\nSábado: 9h às 11h",
     
     certificados: "🎓 *Certificados*\n\nApós a conclusão do curso com aproveitamento mínimo de 70% e presença mínima de 75%, você receberá um certificado reconhecido pelo SENAI e válido em todo o território nacional.\n\n📋 *Para solicitar segunda via:*\n Compareça pessoalmente à nossa escola ou envie sua solicitação para o e-mail: *secretaria390@sp.senai.br* \n\n Inclua as seguintes informações: \n *- Nome completo* \n *- CPF* \n *- Nome do Curso*.",
 
-    boletos: "Perdeu o seu boleto ou precisa da 2ª via? Sem problemas! \n \n Para emitir um novo boleto (enquanto ele estiver dentro do vencimento), é só acessar nosso Portal Financeiro. \n 💻 Acesse por aqui: https://www.sp.senai.br/boletos \n \n Se precisar de algo mais, é só chamar!"
+    boletos: "💰Situação Financeira \n\n Consulte boletos, pagamentos e parcelas: \n https://portalfinanceiro.sesisenaisp.org.br/Account/Login?ReturnUrl=%2F \n\n Emissão de 2ª via de boleto de inscrição online: \n https://www.sp.senai.br/boletos \n\n Débitos vencidos:\n Envie seu nome completo e CPF para: \n secretaria390@sp.senai.br \n\n Se precisar de algo mais, é só chamar!"
 };
 
 // URLs dos cursos
@@ -76,13 +76,11 @@ const urlsCursos = {
     '10': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=ponte&pag=1',
     '11': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=empilhadeira&pag=1',
     '12': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=usinagem&pag=1',
-    '13': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=OPERADOR%20DE%20M%C3%81QUINAS%20DE%20USINAGEM%20CONVENCIONAIS&pag=1',
-    '14': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=prensa&pag=1',
-    '15': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=TORNO%20CNC&pag=1',
-    '16': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=Programa%C3%A7%C3%A3o&pag=1',
-    '17': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=realidade&pag=1',
-    '18': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=soldador&pag=1',
-    '19': 'https://www.sp.senai.br/cursos/0/0?modalidade=3&cidadeint=cruzeiro'
+    '13': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=prensa&pag=1',
+    '14': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=TORNO%20CNC&pag=1',
+    '15': 'https://www.sp.senai.br/cursos/0/0?regiao=3&cidadeint=cruzeiro&pesquisa=soldador&pag=1',
+    '16': 'https://www.sp.senai.br/curso/instalador-de-condicionador-de-ar-tipo-split/64232',
+    '17': 'https://www.sp.senai.br/cursos/0/0?modalidade=3&cidadeint=cruzeiro',
 };
 
 // Nomes dos cursos
@@ -99,13 +97,11 @@ const nomesCursos = {
     '10': 'NR11 - Operador de Ponte Rolante',
     '11': 'NR11 - Operador de Empilhadeira',
     '12': 'Operador de Centro de Usinagem CNC',
-    '13': 'Operador de Máquina de Usinagem Convencional',
-    '14': 'Operador de Prensa Industrial',
-    '15': 'Operador de Torno CNC',
-    '16': 'Programação de Robôs Articulados',
-    '17': 'Realidade Virtual',
-    '18': 'Soldador ao Arco Elétrico e Oxigás',
-    '19': 'Cursos Gratuitos'
+    '13': 'Operador de Prensa Industrial',
+    '14': 'Operador de Torno CNC',
+    '15': 'Soldador ao Arco Elétrico e Oxigás',
+    '16': 'Instalador de Ar Condicionado Tipo Split',
+    '17': 'Cursos Gratuitos'
 };
 
 // Função para obter ou criar estado do usuário
